@@ -1,0 +1,17 @@
+Furry Cat
+Donkeytron
+Pidgeon
+Shoe
+Lamptoy
+
+Royal-crowned LiPokonmaster
+
+- [x] Huis opladen
+- [ ] LiPo-Center
+- [x] Player skin
+- [ ] Pokemon inventory
+- [x] Gym/pokemon fight
+- [ ] Bomen
+- [ ] Struiken
+- [ ] Grassprieten
+- [ ] Professor Oat
