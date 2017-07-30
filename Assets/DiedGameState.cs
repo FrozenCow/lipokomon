@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class DiedGameState : MonoBehaviour {
   public GameObject player;
@@ -21,8 +22,7 @@ public class DiedGameState : MonoBehaviour {
 
   IEnumerator Died()
   {
-    var Damageable = player.GetComponent<Damageable>();
-    var PlayerInput = player.GetComponent<PlayerInput>();
+    var PlayerInput = this.player.GetComponent<PlayerInput>();
 
     PlayerInput.enabled = false;
     var time = 0.0f;
@@ -37,14 +37,16 @@ public class DiedGameState : MonoBehaviour {
       yield return new WaitForEndOfFrame();
     }
 
-    yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+    yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.R));
 
-    Damageable.Health = Damageable.MaxHealth;
-    Camera.main.orthographicSize = CameraZoomAlive;
-    var fireplace = GameObject.FindGameObjectWithTag("Fireplace");
-    player.transform.position = fireplace.transform.position + Vector3.back * 1.0f;
     Time.timeScale = 1.0f;
-    PlayerInput.enabled = true;
+    Camera.main.orthographicSize = CameraZoomAlive;
+    CanvasGroup.alpha = 0.0f;
+
+    var player = this.player.GetComponent<Player>();
+    var charger = player.lastCharger;
+    player.transform.position = new Vector3(charger.transform.position.x, player.transform.position.y, charger.transform.position.z - 1);
+    player.GetComponent<Battery>().charge = player.GetComponent<Battery>().maxCharge;
 
     GameStateManager.Default.SwitchToPlay();
   }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
   public List<Pokomon> pokomons;
+  public Charger lastCharger;
 
   public void OnBatteryEmpty()
   {
@@ -23,11 +24,12 @@ public class Player : MonoBehaviour {
     var charger = other.GetComponent<Charger>();
     if (charger != null)
     {
+      lastCharger = charger;
       StartCoroutine(Charging());
       return;
     }
     var gym = other.GetComponent<Gym>();
-    if (gym != null)
+    if (gym != null && pokomons.Count > 0)
     {
       GameStateManager.Default.SwitchToGym(gym);
     }
